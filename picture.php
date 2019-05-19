@@ -33,6 +33,7 @@ $size = 1 / pow(2, $_GET['z']);
 $centerX = $_GET['x'] * $size + $size/2;
 $centerY = -$_GET['y'] * $size - $size/2;
 
+$nbMaxIterations = $_GET['nbMaxIterations'];
 
 $HEIGHT = 256;
 $WIDTH = 256;
@@ -51,15 +52,18 @@ function updateColor ($x, $y, $column, $line)
 {
     global $image;
     global $white, $black, $red, $green, $blue;
+    global $nbMaxIterations;
 
-    $c = new Complex ($x, $y);
-    $z = new Complex (0, 0);
+    /*$c = new Complex ($x, $y);
+    $z = new Complex (0, 0);*/
+    $c = new Complex (-0.7269, 0.1889);
+    $z = new Complex ($x, $y);
 
-    for ($i=0; $i<50; $i++) {
+    for ($i=0; $i<$nbMaxIterations; $i++) {
         $z = add(multiply($z, $z), $c);
 
         if (norm($z) > 2) {
-            imagesetpixel($image, $column, $line, imagecolorallocate($image, intval(255 * log($i+1) / log(50)), 50, 50));
+            imagesetpixel($image, $column, $line, imagecolorallocate($image, intval(255 * log($i+1) / log($nbMaxIterations)), 50, 50));
             return;
         }
     }
