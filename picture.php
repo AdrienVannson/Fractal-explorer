@@ -33,6 +33,7 @@ $size = 1 / pow(2, $_GET['z']);
 $centerX = $_GET['x'] * $size + $size/2;
 $centerY = -$_GET['y'] * $size - $size/2;
 
+$type = $_GET['type'];
 $nbMaxIterations = $_GET['nbMaxIterations'];
 
 $HEIGHT = 256;
@@ -51,13 +52,17 @@ $blue = imagecolorallocate($image, 100, 100, 255);
 function updateColor ($x, $y, $column, $line)
 {
     global $image;
+    global $type, $nbMaxIterations;
     global $white, $black, $red, $green, $blue;
-    global $nbMaxIterations;
 
-    /*$c = new Complex ($x, $y);
-    $z = new Complex (0, 0);*/
-    $c = new Complex (-0.7269, 0.1889);
-    $z = new Complex ($x, $y);
+    if ($type == 'julia') {
+        $c = new Complex (-0.7269, 0.1889);
+        $z = new Complex ($x, $y);
+    }
+    else if ($type == 'mandelbrot') {
+        $c = new Complex ($x, $y);
+        $z = new Complex (0, 0);
+    }
 
     for ($i=0; $i<$nbMaxIterations; $i++) {
         $z = add(multiply($z, $z), $c);

@@ -31,9 +31,10 @@ function generate ()
         map.removeLayer(currentLayer);
     }
 
+    var type = document.getElementById('type').value;
     var nbMaxIterations = document.getElementById('nbMaxIterations').value;
 
-    currentLayer = L.tileLayer('picture.php?nbMaxIterations='+nbMaxIterations+'&x={x}&y={y}&z={z}', {
+    currentLayer = L.tileLayer('picture.php?type='+type+'&nbMaxIterations='+nbMaxIterations+'&x={x}&y={y}&z={z}', {
         maxZoom: 100,
         attribution: 'Adrien VANNSON',
         id: 'map',
