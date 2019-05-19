@@ -4,27 +4,68 @@
 	<title>Fractal explorer</title>
 
 	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
+	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
 </head>
-<body style="margin: 0;">
+<body>
 
-<div id="map" style="width: 100vw; height: 100vh;"></div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-2">
+			<h1>Fractal explorer</h1>
+
+			<form>
+				<div class="form-group">
+					<label for="type">Type</label>
+					<select class="form-control" id="type">
+						<option>Mandelbrot set</option>
+						<option>Julia set</option>
+					</select>
+				</div>
+
+				<div id="julia-options">
+					<div class="form-group">
+						<label for="real">Real</label>
+						<input type="text" class="form-control" id="real" placeholder="Real part" pattern="[-+]?[0-9]*\.?[0-9]+">
+					</div>
+					<div class="form-group">
+						<label for="imaginary">Imaginary</label>
+						<input type="text" id="imaginary" class="form-control" placeholder="Imaginary part" pattern="[-+]?[0-9]*\.?[0-9]+">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<button type="button" class="btn btn-primary">Explore</button>
+				</div>
+			</form>
+		</div>
+
+		<div class="col" id="col-map">
+			<div id="map"></div>
+		</div>
+	</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 <script>
 	var map = L.map('map', {
-        crs: L.CRS.Simple
-    });
+		crs: L.CRS.Simple
+	});
 
-    map.setView([0, 0], 1);
+	map.setView([0, 0], 1);
 
-    L.tileLayer('picture.php?x={x}&y={y}&z={z}', {
+	L.tileLayer('picture.php?x={x}&y={y}&z={z}', {
 		maxZoom: 100,
 		attribution: 'Adrien VANNSON',
 		id: 'map',
-        noWrap: true
+		noWrap: true
 	}).addTo(map);
 </script>
 
