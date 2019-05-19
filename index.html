@@ -21,8 +21,8 @@
 				<div class="form-group">
 					<label for="type">Type</label>
 					<select class="form-control" id="type">
-						<option>Mandelbrot set</option>
-						<option>Julia set</option>
+						<option value="mandelbrot">Mandelbrot set</option>
+						<option value="julia">Julia set</option>
 					</select>
 				</div>
 
@@ -53,20 +53,7 @@
 <script src="resources/bootstrap/bootstrap.bundle.min.js"></script>
 <script src="resources/leaflet/leaflet.js"></script>
 
-<script>
-	var map = L.map('map', {
-		crs: L.CRS.Simple
-	});
-
-	map.setView([0, 0], 1);
-
-	L.tileLayer('picture.php?x={x}&y={y}&z={z}', {
-		maxZoom: 100,
-		attribution: 'Adrien VANNSON',
-		id: 'map',
-		noWrap: true
-	}).addTo(map);
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
