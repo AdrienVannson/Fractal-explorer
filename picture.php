@@ -46,30 +46,35 @@ $red = imagecolorallocate($image, 255, 0, 0);
 $green = imagecolorallocate($image, 0, 255, 0);
 $blue = imagecolorallocate($image, 100, 100, 255);
 
-for ($line=0; $line<$HEIGHT; $line++) {
-    $y = -$size / $HEIGHT * $line + $centerY + $size/2;
 
-    for ($column=0; $column<$WIDTH; $column++) {
-        $x = $size / $WIDTH * $column + $centerX - $size/2;
+function updateColor ($x, $y, $column, $line)
+{
+    global $image;
+    global $white, $black, $red, $green, $blue;
 
-        $success = false;
+    $c = new Complex ($x, $y);
+    $z = new Complex (0, 0);
 
-        $c = new Complex ($x, $y);
-        $z = new Complex (0, 0);
+    for ($i=0; $i<50; $i++) {
+        $z = add(multiply($z, $z), $c);
 
-        for ($i=0; $i<50; $i++) {
-            $z = add(multiply($z, $z), $c);
-
-            if (norm($z) > 2) {
-                $success = true;
-                imagesetpixel($image, $column, $line, imagecolorallocate($image, intval(255 * log($i+1) / log(50)), 50, 50));
-                break;
-            }
+        if (norm($z) > 2) {
+            imagesetpixel($image, $column, $line, imagecolorallocate($image, intval(255 * log($i+1) / log(50)), 50, 50));
+            return;
         }
+    }
 
-        if (!$success) {
-            imagesetpixel($image, $column, $line, $white);
-        }
+    imagesetpixel($image, $column, $line, $white);
+}
+
+
+for ($column=0; $column<$WIDTH; $column++) {
+    $x = $size / $WIDTH * $column + $centerX - $size/2;
+
+    for ($line=0; $line<$HEIGHT; $line++) {
+        $y = -$size / $HEIGHT * $line + $centerY + $size/2;
+
+        updateColor($x, $y, $column, $line);
     }
 }
 
