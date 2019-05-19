@@ -56,7 +56,7 @@ function updateColor ($x, $y, $column, $line)
     global $white, $black, $red, $green, $blue;
 
     if ($type == 'julia') {
-        $c = new Complex (-0.7269, 0.1889);
+        $c = new Complex ($_GET['julia_a'], $_GET['julia_b']);
         $z = new Complex ($x, $y);
     }
     else if ($type == 'mandelbrot') {

@@ -34,7 +34,14 @@ function generate ()
     var type = document.getElementById('type').value;
     var nbMaxIterations = document.getElementById('nbMaxIterations').value;
 
-    currentLayer = L.tileLayer('picture.php?type='+type+'&nbMaxIterations='+nbMaxIterations+'&x={x}&y={y}&z={z}', {
+    var url = 'picture.php?type='+type+'&nbMaxIterations='+nbMaxIterations+'&x={x}&y={y}&z={z}';
+
+    if (type == 'julia') {
+        url += '&julia_a=' + document.getElementById('julia_a').value;
+        url += '&julia_b=' + document.getElementById('julia_b').value;
+    }
+
+    currentLayer = L.tileLayer(url, {
         maxZoom: 100,
         attribution: 'Adrien VANNSON',
         id: 'map',
