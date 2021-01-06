@@ -1,31 +1,4 @@
 <?php
-
-class Complex
-{
-    public $x, $y;
-
-    public function __construct ($x, $y)
-    {
-        $this->x = $x;
-        $this->y = $y;
-    }
-}
-
-function add ($a, $b)
-{
-    return new Complex($a->x + $b->x, $a->y + $b->y);
-}
-
-function multiply ($a, $b)
-{
-    return new Complex($a->x*$b->x - $a->y*$b->y, $a->x*$b->y + $b->x*$a->y);
-}
-
-function norm ($z)
-{
-    return sqrt($z->x*$z->x + $z->y*$z->y);
-}
-
 header("Content-type: image/png");
 
 $size = 1 / pow(2, $_GET['z']);
@@ -56,18 +29,20 @@ function updateColor ($x, $y, $column, $line)
     global $white, $black, $red, $green, $blue;
 
     if ($type == 'julia') {
-        $c = new Complex ($_GET['julia_a'], $_GET['julia_b']);
-        $z = new Complex ($x, $y);
+        [$c_re, $c_im] = [$_GET['julia_a'], $_GET['julia_b']];
+        [$z_re, $z_im] = [$x, $y];
     }
     else if ($type == 'mandelbrot') {
-        $c = new Complex ($x, $y);
-        $z = new Complex (0, 0);
+        [$c_re, $c_im] = [$x, $y];
+        [$z_re, $z_im] = [0, 0];
     }
 
     for ($i=0; $i<$nbMaxIterations; $i++) {
-        $z = add(multiply($z, $z), $c);
+        $old_z_re = $z_re;
+        $z_re = $z_re*$z_re - $z_im*$z_im + $c_re;
+        $z_im = 2*$old_z_re*$z_im + $c_im;
 
-        if (norm($z) > 2) {
+        if ($z_re*$z_re + $z_im*$z_im > 4) {
             imagesetpixel($image, $column, $line, imagecolorallocate($image, intval(255 * log($i+1) / log($nbMaxIterations)), 50, 50));
             return;
         }
