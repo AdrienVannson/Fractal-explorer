@@ -7,7 +7,7 @@ $centerX = $_GET['x'] * $size + $size/2;
 $centerY = -$_GET['y'] * $size - $size/2;
 
 $type = $_GET['type'];
-$nbMaxIterations = $_GET['nbMaxIterations'];
+$nbMaxIterations = min($_GET['nbMaxIterations'], 100);
 
 $HEIGHT = 256;
 $WIDTH = 256;
